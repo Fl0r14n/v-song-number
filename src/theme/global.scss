@@ -1,0 +1,57 @@
+@import "variables";
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/vue/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/vue/css/normalize.css";
+@import "@ionic/vue/css/structure.css";
+@import "@ionic/vue/css/typography.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/vue/css/padding.css";
+@import "@ionic/vue/css/float-elements.css";
+@import "@ionic/vue/css/text-alignment.css";
+@import "@ionic/vue/css/text-transformation.css";
+@import "@ionic/vue/css/flex-utils.css";
+@import "@ionic/vue/css/display.css";
+
+.toast-info {
+  .toast-container {
+    border-color: #0a9dc7;
+    background-color: #11c1f3;
+    color: #fff;
+  }
+}
+
+.toast-warn {
+  .toast-container {
+    border-color: #e6b500;
+    background-color: #ffc900;
+    color: #fff;
+  }
+}
+
+.toast-error {
+  .toast-container {
+    border-color: #e42112;
+    background-color: #ef473a;
+    color: #fff;
+  }
+}
+
+.toast-debug {
+  .toast-container {
+    border-color: #111;
+    background-color: #444444;
+    color: #fff;
+  }
+}
+
+.info-modal {
+
+  .alert-message {
+    max-height: 100%;
+    padding-bottom: 0;
+  }
+}

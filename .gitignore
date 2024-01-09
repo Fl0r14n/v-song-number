@@ -18,6 +18,7 @@ log.txt
 npm-debug.log*
 
 /.idea
+/.vscode
 /.ionic
 /.sass-cache
 /.sourcemaps
@@ -30,3 +31,8 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+package-lock.json
+android
+electron
+ios
