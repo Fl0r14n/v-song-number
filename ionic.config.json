@@ -1,0 +1,7 @@
+{
+  "name": "song-number",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
