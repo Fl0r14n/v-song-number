@@ -10,6 +10,10 @@ import { createI18n } from 'vue-i18n'
 import { en } from '@/i18n/en'
 import { ro } from '@/i18n/ro'
 
+import { defineCustomElements } from '@ionic/pwa-elements/loader'
+
+defineCustomElements(globalThis.window)
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
