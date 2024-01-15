@@ -11,6 +11,7 @@ import { en } from '@/i18n/en'
 import { ro } from '@/i18n/ro'
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
+import { createPinia } from 'pinia'
 
 defineCustomElements(globalThis.window)
 
@@ -59,9 +60,7 @@ const i18n = createI18n({
   fallbackWarn: false,
   missingWarn: false
 })
+const pinia = createPinia()
 
-const app = createApp(App)
-  .use(IonicVue)
-  .use(router)
-  .use(i18n)
+const app = createApp(App).use(pinia).use(IonicVue).use(router).use(i18n)
 router.isReady().then(() => app.mount('#app'))

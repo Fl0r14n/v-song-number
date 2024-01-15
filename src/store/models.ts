@@ -1,6 +1,6 @@
 export interface Digit {
   pos: number
-  value: number
+  val: number
 }
 
 export interface Book {

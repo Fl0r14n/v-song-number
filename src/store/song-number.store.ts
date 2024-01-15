@@ -26,6 +26,7 @@ const isConnected = (state: ChromeCastState) => (state & ChromeCastState.CONNECT
 
 export const useSongNumberStore = defineStore('SongNumberStore', () => {
   const chromeCastStore = useChromeCastStore()
+  const { send, close, open } = chromeCastStore
   const { message, state } = storeToRefs(chromeCastStore)
   const connected = computed(() => state.value === ChromeCastState.CONNECTED)
   const presenting = computed(() => connected.value && (message.value.type === MessageType.SONG || message.value.type === MessageType.INFO))
@@ -41,7 +42,7 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
   const castButton = computed(() => ({
     disabled: !isInitialized(state.value),
     color: (isConnected(state.value) && 'secondary') || 'primary',
-    icon: 'assets/icon/cast-icon.svg'
+    icon: 'icon/cast-icon.svg'
   }))
   const presentedButton = computed(() => ({
     disabled: !isConnected(state.value),
@@ -51,20 +52,69 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
   const digits = storageRef<Digit[]>(STORAGE_ID_DIGITS, [
     {
       pos: 0,
-      value: 0
+      val: 0
     },
     {
       pos: 1,
-      value: 0
+      val: 0
     },
     {
       pos: 2,
-      value: 0
+      val: 0
     }
   ])
+  const digitsLength = computed({
+    get: () => digits.value.length || 0,
+    set: size => {
+      const value = []
+      for (let i = 0; i < size; i++) {
+        value.push({
+          pos: i,
+          val: 0
+        })
+      }
+      digits.value = value
+    }
+  })
+  const number = computed(() => {
+    let result = ''
+    let leadingZeros = true
+    for (const digit of digits.value) {
+      if (digit.val !== 0) {
+        leadingZeros = false
+        result += digit.val
+      } else if (!leadingZeros) {
+        result += digit.val
+      }
+    }
+    return result
+  })
   const info = storageRef(STORAGE_ID_INFO, '')
   const notes = storageRef(STORAGE_ID_NOTES, '')
   const book = storageRef<Book>(STORAGE_ID_BOOK, {})
+  const clear = () => send({ type: MessageType.CLEAR })
+  const cast = () => {
+    if (isConnected(state.value)) {
+      close()
+    } else {
+      open()
+    }
+  }
+  const readPresented = () => send({ type: MessageType.READ })
+  const presentInfo = (clr?: boolean) => {
+    if (clr) {
+      clear()
+      return
+    }
+    send({ type: MessageType.INFO, message: info.value })
+  }
+  const presentNumber = (clr?: boolean) => {
+    if (clr) {
+      clear()
+      return
+    }
+    send({ type: MessageType.SONG, number: number.value, book: book.value, notes: notes.value })
+  }
   return {
     connected,
     presenting,
@@ -74,6 +124,14 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
     info,
     notes,
     book,
-    digits
+    digits,
+    message,
+    clear,
+    cast,
+    readPresented,
+    presentInfo,
+    presentNumber,
+    digitsLength,
+    number
   }
 })

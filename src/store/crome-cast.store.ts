@@ -88,6 +88,16 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     )
   }
 
+  const send = (msg: any) =>
+    session.value?.sendMessage(
+      NAMESPACE,
+      msg,
+      () => {},
+      (err: any) => {
+        log.error(`${t('providers.chromecast.error')}${err.description}`)
+      }
+    )
+
   const onSession = (s: any) => {
     log.debug(`${t('providers.chromecast.newSession')}${s.sessionId}`)
     s.addUpdateListener((isAlive: boolean) => {
@@ -118,6 +128,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     open,
     close,
     message,
-    state
+    state,
+    send
   }
 })
