@@ -8,7 +8,7 @@
         </ion-title>
         <ion-buttons slot="primary">
           <ion-fab-button :disabled="castButton.disabled" :color="castButton.color" @click="cast()">
-            <img :src="castButton.icon" alt="cast-icon" />
+            <ion-icon :src="castButton.src" />
           </ion-fab-button>
         </ion-buttons>
       </ion-toolbar>
@@ -17,8 +17,7 @@
       <song-number v-model="digits" />
 
       <ion-item class="ion-padding-start ion-padding-end">
-        <ion-label position="floating">{{ t('pages.main.notes') }}</ion-label>
-        <ion-input type="text" v-model="notes" />
+        <ion-input v-model="notes" :label="t('pages.main.notes')" label-placement="floating" />
       </ion-item>
 
       <ion-item class="ion-padding" @click="openSelectBookModal()">

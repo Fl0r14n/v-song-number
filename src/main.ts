@@ -28,18 +28,22 @@ const router = createRouter({
         },
         {
           path: 'main',
+          name: 'main',
           component: () => import('@/main/pages/MainPage.vue')
         },
         {
           path: 'info',
+          name: 'info',
           component: () => import('@/info/pages/InfoPage.vue')
         },
         {
           path: 'books',
+          name: 'books',
           component: () => import('@/books/pages/BooksPage.vue')
         },
         {
           path: 'config',
+          name: 'config',
           component: () => import('@/config/pages/ConfigPage.vue')
         },
         {

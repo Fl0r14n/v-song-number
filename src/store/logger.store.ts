@@ -24,7 +24,7 @@ const toast = async (msg: any, cssClass?: string) => {
 }
 
 export const useLoggerStore = defineStore('LoggerStore', () => {
-  const logLevel = storageRef(STORAGE_ID_DEBUG, LogLevel.INFO, value => Number(value))
+  const logLevel = storageRef(STORAGE_ID_DEBUG, LogLevel.INFO, value => Number(value) as LogLevel)
   const info = async (message: any) => toast(message, 'toast-info')
   const warn = async (message: any) => logLevel.value >= LogLevel.WARN && toast(message, 'toast-warn')
   const error = async (message: any) => logLevel.value >= LogLevel.ERROR && toast(message, 'toast-error')

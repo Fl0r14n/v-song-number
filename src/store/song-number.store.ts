@@ -1,6 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { Book, ChromeCastState, Digit, storageRef, useChromeCastStore } from '.'
 import { computed } from 'vue'
+import { information, square, play } from 'ionicons/icons'
 
 const STORAGE_ID_DIGITS = 'song-number-settings-digits'
 const STORAGE_ID_NOTES = 'song-number-settings-notes'
@@ -35,19 +36,19 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
       ({
         presenting: presenting.value,
         disabled: !connected.value,
-        icon: (presenting.value && 'square') || 'play',
+        icon: (presenting.value && square) || play,
         color: (presenting.value && 'danger') || 'primary'
       }) as PresentButton
   )
   const castButton = computed(() => ({
     disabled: !isInitialized(state.value),
     color: (isConnected(state.value) && 'secondary') || 'primary',
-    icon: 'icon/cast-icon.svg'
+    src: 'icon/cast-icon.svg'
   }))
   const presentedButton = computed(() => ({
     disabled: !isConnected(state.value),
     color: 'secondary',
-    icon: 'information'
+    icon: information
   }))
   const digits = storageRef<Digit[]>(STORAGE_ID_DIGITS, [
     {
@@ -64,7 +65,7 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
     }
   ])
   const digitsLength = computed({
-    get: () => digits.value.length || 0,
+    get: () => digits.value.length,
     set: size => {
       const value = []
       for (let i = 0; i < size; i++) {
