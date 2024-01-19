@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 
 declare global {
   interface Window {
+    __onGCastApiAvailable: (isAvailable: boolean) => void
     chrome?: {
       cast?: any
 
@@ -92,7 +93,8 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     session.value?.sendMessage(
       NAMESPACE,
       msg,
-      () => {},
+      () => {
+      },
       (err: any) => {
         log.error(`${t('providers.chromecast.error')}${err.description}`)
       }
@@ -116,12 +118,14 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
   watch(
     state,
     async s => {
-      if (s === ChromeCastState.DISABLED && !globalThis.window?.chrome) {
+      if (s === ChromeCastState.DISABLED) {
         await loadScript({ src: CAST_SCRIPT })
       }
     },
     { immediate: true }
   )
+
+  globalThis.window && (globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init())
 
   return {
     init,
