@@ -28,7 +28,7 @@ export const en = {
       cancel: 'Cancel',
       remove: 'Remove',
       permanentRemoval: 'This operation cannot be undone',
-      removeBook: 'Remove {{value}}?'
+      removeBook: 'Remove {value}?'
     },
     config: {
       title: 'Settings',

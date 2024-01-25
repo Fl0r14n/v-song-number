@@ -28,7 +28,7 @@ export const ro = {
       cancel: 'Anulează',
       remove: 'Elimină',
       permanentRemoval: 'Această operație nu poate fi anulată',
-      removeBook: 'Eliminați {{value}}?',
+      removeBook: 'Eliminați {value}?',
       collection: 'Colecție'
     },
     config: {

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { storageRef } from '@/store/ref'
 import axios from 'axios'
 import { useLoggerStore } from '@/store/logger.store'
-import { BookCollection, BookResourceCollection, Language } from '.'
+import { Book, BookCollection, BookResourceCollection, Language } from '.'
 
 const STORAGE_ID_COLLECTIONS = 'song-number-settings-collection'
 const STORAGE_ID_DOWNLOADS = 'song-number-settings-downloads'
@@ -41,6 +41,25 @@ export const useSongBooksStore = defineStore('SongBooksStore', () => {
           .then(r => r.data)
       )
     ).then(v => v.reduce((a, b) => [...a, ...b]))
+  const addBook = (book: Book, collectionName: string) => {
+    const collection = collections.value.find(c => c.name === collectionName)
+    if (collection) {
+      if (!collection.books || collection.books.length === undefined) {
+        collection.books = []
+      }
+      collection.books.push(book)
+    }
+  }
+  const deleteBook = (book: Book, collection: BookCollection) => {
+    if (collection.books) {
+      const idx = collection.books.findIndex(i => i.title === book.title && i.description === book.description)
+      if (idx > -1) {
+        collection.books.splice(idx, 1)
+      }
+    }
+  }
+
+  const editBook = (oldBook: Book, newBook: Book) => Object.assign(oldBook, newBook)
 
   return {
     endpoint,
@@ -48,6 +67,9 @@ export const useSongBooksStore = defineStore('SongBooksStore', () => {
     getIndex,
     getCollections,
     collections,
-    defaultCover
+    defaultCover,
+    addBook,
+    deleteBook,
+    editBook
   }
 })

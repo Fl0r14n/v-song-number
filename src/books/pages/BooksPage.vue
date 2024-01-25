@@ -15,7 +15,7 @@
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-item-group v-for="(collection, i) in collections" :key="i">
-        <ion-item-sliding #slidersRef>
+        <ion-item-sliding ref="slidersRef">
           <ion-item>
             <ion-label color="medium">{{ collection.name }}</ion-label>
           </ion-item>
@@ -27,7 +27,7 @@
         </ion-item-sliding>
 
         <ion-reorder-group :disabled="!collection.reorder" @ionItemReorder="reorderBook(collection, $event)">
-          <ion-item-sliding v-for="(b, j) in collection.books" :key="j" #slidersRef>
+          <ion-item-sliding v-for="(b, j) in collection.books" :key="j" ref="slidersRef">
             <ion-item :color="b === book ? 'primary' : ''">
               <ion-thumbnail slot="start">
                 <img :src="b.thumb" alt="book-thumb" />
@@ -62,44 +62,123 @@
 </template>
 <script setup lang="ts">
   import {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonIcon,
-    ItemReorderEventDetail,
-    IonItemGroup,
-    IonReorderGroup,
-    IonReorder,
-    IonThumbnail,
-    IonItem,
-    IonLabel,
-    IonItemOptions,
-    IonItemOption,
-    IonFab,
-    IonItemSliding,
+    alertController,
     IonButtons,
-    IonFabButton
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonItemGroup,
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
+    IonLabel,
+    IonPage,
+    IonReorder,
+    IonReorderGroup,
+    IonThumbnail,
+    IonTitle,
+    IonToolbar,
+    ItemReorderEventDetail,
+    modalController
   } from '@ionic/vue'
+  import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { list, reorderFourOutline, add, create, trash } from 'ionicons/icons'
+  import { add, create, list, reorderFourOutline, trash } from 'ionicons/icons'
   import { Book, BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
   import { storeToRefs } from 'pinia'
+  import CollectionModal from '@/books/components/CollectionModal.vue'
+  import BookModal from '@/books/components/BookModal.vue'
 
   const { t } = useI18n()
-
   const songNumberStore = useSongNumberStore()
-  const { cast } = songNumberStore
   const { book } = storeToRefs(songNumberStore)
-  const { collections } = storeToRefs(useSongBooksStore())
+  const songBooksStore = useSongBooksStore()
+  const { addBook: addToCollection, deleteBook: delFromCollection, editBook: editInCollection } = songBooksStore
+  const { collections } = storeToRefs(songBooksStore)
+  const slidersRef = ref<(typeof IonItemSliding)[]>([])
 
-  const addBook = async () => {}
-
-  const reorderCollections = async () => {}
-
-  const reorderBook = async (collection: BookCollection, { detail }: CustomEvent<ItemReorderEventDetail>) => {}
-  const editBook = async (book: Book, collection: BookCollection) => {}
-
-  const removeBook = async (item: Book, collection: BookCollection) => {}
+  const addBook = async () => {
+    const modal = await modalController.create({
+      component: BookModal,
+      componentProps: {
+        book: {},
+        collections: collections.value
+      }
+    })
+    await modal.present()
+    const { data } = await modal.onDidDismiss()
+    closeItemSliders()
+    if (data) {
+      const { label } = data
+      delete data.label
+      addToCollection(data, label)
+      book.value = data
+    }
+  }
+  const reorderCollections = async () => {
+    const modal = await modalController.create({
+      component: CollectionModal
+    })
+    await modal.present()
+  }
+  const reorderBook = async (collection: BookCollection, { detail }: CustomEvent<ItemReorderEventDetail>) => {
+    const { books } = collection
+    books && books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
+    await detail.complete(true)
+  }
+  const editBook = async (b: Book, c: BookCollection) => {
+    const modal = await modalController.create({
+      component: BookModal,
+      componentProps: {
+        book: b,
+        collection: c,
+        collections: collections.value
+      }
+    })
+    modal.present()
+    const { data } = await modal.onDidDismiss()
+    closeItemSliders()
+    if (data) {
+      // did the collection change?
+      if (data.label === c.name) {
+        delete data.label
+        editInCollection(b, data)
+      } else {
+        delFromCollection(b, c)
+        const { label } = data
+        delete data.label
+        addToCollection(data, label)
+      }
+      delete data.label
+      book.value = data
+    }
+  }
+  const removeBook = async (item: Book, collection: BookCollection) => {
+    const confirm = await alertController.create({
+      header: t('pages.books.removeBook', { value: item.title }),
+      message: t('pages.books.permanentRemoval'),
+      buttons: [
+        {
+          text: t('pages.books.cancel'),
+          handler: () => {
+            closeItemSliders()
+          }
+        },
+        {
+          text: t('pages.books.remove'),
+          handler: () => {
+            closeItemSliders()
+            delFromCollection(item, collection)
+          }
+        }
+      ]
+    })
+    await confirm.present()
+  }
+  const closeItemSliders = () => {
+    slidersRef.value.forEach(v => v.$el.close())
+  }
 </script>
