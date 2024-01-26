@@ -63,8 +63,8 @@ export const en = {
     },
     collectionModal: {
       title: 'Collections',
-      editDialog: 'Edit {{value}}?',
-      removeDialog: 'Remove {{value}}?',
+      editDialog: 'Edit {value}?',
+      removeDialog: 'Remove {value}?',
       addDialog: 'Add new collection',
       add: 'Add',
       edit: 'Edit',

@@ -64,8 +64,8 @@ export const ro = {
     },
     collectionModal: {
       title: 'Colecții',
-      editDialog: 'Editați {{value}}?',
-      removeDialog: 'Eliminați {{value}}?',
+      editDialog: 'Editați {value}?',
+      removeDialog: 'Eliminați {value}?',
       addDialog: 'Adaugă colecție',
       add: 'Adaugă',
       edit: 'Editează',

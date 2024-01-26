@@ -178,7 +178,5 @@
     })
     await confirm.present()
   }
-  const closeItemSliders = () => {
-    slidersRef.value.forEach(v => v.$el.close())
-  }
+  const closeItemSliders = () => slidersRef.value.forEach(v => v.$el.close())
 </script>
