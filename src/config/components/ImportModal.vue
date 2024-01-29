@@ -4,7 +4,7 @@
       <ion-title class="ion-text-center">
         {{ t('pages.importModal.title') }}
       </ion-title>
-      <ion-buttons slot="end">
+      <ion-buttons slot="primary">
         <ion-button color="primary" @click="modalController.dismiss()">
           <ion-icon slot="icon-only" :icon="closeCircle" />
         </ion-button>

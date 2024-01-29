@@ -4,7 +4,7 @@
       <ion-title class="ion-text-center">
         {{ t('pages.selectBookModal.title') }}
       </ion-title>
-      <ion-buttons slot="end">
+      <ion-buttons slot="primary">
         <ion-button color="primary" @click="dismiss()">
           <ion-icon slot="icon-only" :icon="closeCircle" />
         </ion-button>
