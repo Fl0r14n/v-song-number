@@ -34,7 +34,7 @@
             maxlength="128"
             required
             minlength="5"
-            @ionInput="validate($event)"
+            :class="classes.title"
             @ionBlur="touch" />
           <ion-input
             type="text"
@@ -45,7 +45,12 @@
             :counter="true"
             maxlength="256"
             @ionBlur="touch" />
-          <ion-select v-model="form.label" :label="t('pages.bookModal.collection')" label-placement="floating" required>
+          <ion-select
+            v-model="form.label"
+            :label="t('pages.bookModal.collection')"
+            label-placement="floating"
+            required
+            :class="classes.label">
             <ion-select-option v-for="(label, i) in labels" :key="i">{{ label }}</ion-select-option>
           </ion-select>
           <ion-button expand="block" color="primary" type="submit" :disabled="!valid">
@@ -58,7 +63,6 @@
 </template>
 <script lang="ts" setup>
   import {
-    InputCustomEvent,
     IonButton,
     IonButtons,
     IonCard,
@@ -86,7 +90,7 @@
     collection?: BookCollection
     book?: Book
   }>()
-  const { form, valid, touch } = useForm({
+  const { form, valid, touch, classes } = useForm({
     form: { ...props.book, label: props.collection?.name },
     rules: { title: [requiredRule(), minLengthRule(5)], thumb: [requiredRule()], label: [requiredRule()] }
   })
@@ -108,12 +112,4 @@
     }
   }
   const submit = () => dismiss(form.value)
-
-  const validate = (ev: InputCustomEvent) => {
-    const { value, classList } = ev.target
-    console.log(value, classList, ev)
-
-    classList.add('ion-invalid')
-    classList.add('ion-touched')
-  }
 </script>

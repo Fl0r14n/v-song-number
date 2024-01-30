@@ -13,27 +13,41 @@ export interface ReactiveForm<T> {
 
 export const useForm = <T>(value: ReactiveForm<T>) => {
   const form = ref(value.form)
-  const rules = value.rules
-  const getRules = (field: keyof T) => rules?.[field] as ValidationRule[]
+  const rules = ref(value.rules)
+  const getRules = (field: keyof T) => (rules.value as any)?.[field] as ValidationRule[] | undefined
+  const isValid = (field: keyof T) =>
+    getRules(field)
+      ?.map(v => v(form.value[field as string]))
+      .reduce((p, n) => p && n, true)
+  const getClass = (field: keyof T) => {
+    const valid = isValid(field)
+    return (
+      (valid !== undefined && {
+        'ion-valid': valid,
+        'ion-invalid': !valid
+      }) ||
+      {}
+    )
+  }
   const valid = computed(() =>
-    Object.keys(rules || {})
-      .map(key =>
-        getRules(key as keyof T)
-          .map(v => v(form.value[key]))
-          .reduce((p, n) => p && n, true)
-      )
-      .reduce((p, c) => p && c, false)
+    Object.keys(rules.value || {})
+      .map(key => isValid(key as keyof T))
+      .reduce((p, c) => p && c, true)
   )
-  //TODO
-  const classes = computed(() => ({}))
+  const classes = computed(() =>
+    Object.keys(form.value)
+      .map(key => ({ [key]: getClass(key as keyof T) }))
+      .reduce((p, c) => ({ ...p, ...c }), {} as { [K in keyof T]: object })
+  )
   const touch = (ev: InputCustomEvent<FocusEvent>) => ev.target?.classList.add('ion-touched')
   return {
     form,
     rules,
     valid,
+    classes,
     touch,
-    getRules,
-    classes
+    isValid,
+    getClass
   }
 }
 
