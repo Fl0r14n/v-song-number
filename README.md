@@ -14,20 +14,20 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 ### Electron
 
 * Add deployment platform
-  ```npx cap add @capacitor-community/electron```
+  ```ionic cap add @capacitor-community/electron```
 * Copy build files to platform
-  ```npx cap copy```
+  ```ionic cap copy```
 * Open project for electron
-  ```npx cap open @capacitor-community/electron```
+  ```ionic cap open @capacitor-community/electron```
 
 ### Android
 
 * Add deployment platform
-  ```npx cap add android```
+  ```ionic cap add android```
   or  
-  ```npx cap add ios```
+  ```ionic cap add ios```
 * Copy build files to platform
-  ```npx cap copy```
+  ```ionic cap copy```
 * Generate assets (icon and splash)
   ```cordova-res android --skip-config --copy```
   or
@@ -44,18 +44,18 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 ### IOS
 
 * Add deployment platform
-  ```npx cap add ios```
+  ```ionic cap add ios```
 * Copy build files to platform
-  ```npx cap copy```
+  ```ionic cap copy```
 * Generate assets (icon and splash)
   ```cordova-res ios --skip-config --copy```
 
 ### Deploy
 
 * Open platform ide for native build. You might need to change path in `capacitor.config.ts`
-  ```npx cap open```
+  ```ionic cap open android```
 * For iOS open xcode
-  ```npx cap open ios```
+  ```ionic cap open ios```
 
 #### Android
 
