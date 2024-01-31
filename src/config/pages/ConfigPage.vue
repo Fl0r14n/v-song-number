@@ -76,7 +76,7 @@
     const modal = await modalController.create({
       component: ImportModal
     })
-    modal.present()
+    await modal.present()
     await modal.onDidDismiss()
     router.push({ name: 'books' })
   }

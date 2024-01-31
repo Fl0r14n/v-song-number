@@ -79,9 +79,9 @@
     IonToolbar,
     modalController
   } from '@ionic/vue'
-  import { computed } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { Book, BookCollection, minLengthRule, requiredRule, useCameraStore, useForm } from '@/store'
+  import { Book, BookCollection, minLengthRule, requiredRule, useCameraStore, useForm, useSongBooksStore } from '@/store'
   import { camera, closeCircle, image } from 'ionicons/icons'
   import { CameraSource } from '@capacitor/camera'
 
@@ -95,6 +95,7 @@
     rules: { title: [requiredRule(), minLengthRule(5)], thumb: [requiredRule()], label: [requiredRule()] }
   })
   const { t } = useI18n()
+  const { defaultCover } = useSongBooksStore()
   const { getPicture } = useCameraStore()
   const { dismiss } = modalController
   const editMode = computed(() => !!props.book?.title)
@@ -112,4 +113,11 @@
     }
   }
   const submit = () => dismiss(form.value)
+
+  onMounted(async () => {
+    if (!form.value.thumb) {
+      const cover = await defaultCover()
+      form.value.thumb = cover.thumb
+    }
+  })
 </script>

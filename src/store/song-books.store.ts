@@ -12,7 +12,14 @@ export const useSongBooksStore = defineStore('SongBooksStore', () => {
   const log = useLoggerStore()
   const endpoint = storageRef(STORAGE_ID_DOWNLOADS, VITE_DOWNLOADS)
   const collections = storageRef<BookCollection[]>(STORAGE_ID_COLLECTIONS, [])
-  const defaultCover = () => axios.get('assets/json/cover.json')
+  const defaultCover = () =>
+    axios
+      .get<Book>('/json/cover.json')
+      .catch(err => {
+        log.error(err.response.message)
+        return err.response
+      })
+      .then(r => r.data)
   const getLanguages = () =>
     axios
       .get<Language[]>(`${endpoint.value}/languages.json`)

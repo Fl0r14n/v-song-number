@@ -166,6 +166,6 @@
 
   const reorderCollection = async ({ detail }: CustomEvent<ItemReorderEventDetail>) => {
     collections.value.splice(detail.to, 0, collections.value.splice(detail.from, 1)[0])
-    await detail.complete(true)
+    await detail.complete(false)
   }
 </script>

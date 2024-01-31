@@ -25,7 +25,6 @@
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
-
         <ion-reorder-group :disabled="!collection.reorder" @ionItemReorder="reorderBook(collection, $event)">
           <ion-item-sliding v-for="(b, j) in collection.books" :key="j" ref="slidersRef">
             <ion-item :color="b === book ? 'primary' : ''">
@@ -51,7 +50,6 @@
           </ion-item-sliding>
         </ion-reorder-group>
       </ion-item-group>
-
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button @click="addBook()">
           <ion-icon :icon="add" />
@@ -127,7 +125,7 @@
   const reorderBook = async (collection: BookCollection, { detail }: CustomEvent<ItemReorderEventDetail>) => {
     const { books } = collection
     books && books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
-    await detail.complete(true)
+    await detail.complete(false)
   }
   const editBook = async (b: Book, c: BookCollection) => {
     const modal = await modalController.create({
@@ -138,7 +136,7 @@
         collections: collections.value
       }
     })
-    modal.present()
+    await modal.present()
     const { data } = await modal.onDidDismiss()
     closeItemSliders()
     if (data) {
