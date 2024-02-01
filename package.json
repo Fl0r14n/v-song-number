@@ -9,7 +9,7 @@
   "license": "GNUv2",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Fl0r14n/song-number.git"
+    "url": "git@github.com:Fl0r14n/v-song-number.git"
   },
   "keywords": [
     "vue",

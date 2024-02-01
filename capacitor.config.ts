@@ -9,7 +9,8 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 1000
+      launchShowDuration: 1000,
+      showSpinner: true
     }
   },
   cordova: {
