@@ -30,7 +30,9 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
   const { send, close, open } = chromeCastStore
   const { message, state } = storeToRefs(chromeCastStore)
   const connected = computed(() => state.value === ChromeCastState.CONNECTED)
-  const presenting = computed(() => connected.value && (message.value.type === MessageType.SONG || message.value.type === MessageType.INFO))
+  const presenting = computed(
+    () => connected.value && (message.value?.type === MessageType.SONG || message.value?.type === MessageType.INFO)
+  )
   const presentButton = computed(
     () =>
       ({

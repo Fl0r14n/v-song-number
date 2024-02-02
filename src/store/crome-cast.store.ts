@@ -93,8 +93,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     session.value?.sendMessage(
       NAMESPACE,
       msg,
-      () => {
-      },
+      () => {},
       (err: any) => {
         log.error(`${t('providers.chromecast.error')}${err.description}`)
       }
@@ -125,7 +124,11 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     { immediate: true }
   )
 
+  // web
   globalThis.window && (globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init())
+
+  // mobile
+  document.addEventListener('deviceready', () => init())
 
   return {
     init,
