@@ -16,10 +16,10 @@
       <ion-card>
         <img :src="form.thumb" alt="book-thumb" v-if="form.thumb" />
         <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button @click="takePicture()" class="ion-margin-bottom">
+          <ion-fab-button @click="takePicture()" class="ion-margin-bottom" :disabled="!hasCameraPermission">
             <ion-icon :icon="camera" />
           </ion-fab-button>
-          <ion-fab-button @click="selectPicture()">
+          <ion-fab-button @click="selectPicture()" :disabled="!hasPhotosPermission">
             <ion-icon :icon="image" />
           </ion-fab-button>
         </ion-fab>
@@ -84,6 +84,7 @@
   import { Book, BookCollection, minLengthRule, requiredRule, useCameraStore, useForm, useSongBooksStore } from '@/store'
   import { camera, closeCircle, image } from 'ionicons/icons'
   import { CameraSource } from '@capacitor/camera'
+  import { storeToRefs } from 'pinia'
 
   const props = defineProps<{
     collections?: BookCollection[]
@@ -96,7 +97,9 @@
   })
   const { t } = useI18n()
   const { defaultCover } = useSongBooksStore()
-  const { getPicture } = useCameraStore()
+  const cameraStore = useCameraStore()
+  const { getPicture, askPermission } = cameraStore
+  const { hasPhotosPermission, hasCameraPermission } = storeToRefs(cameraStore)
   const { dismiss } = modalController
   const editMode = computed(() => !!props.book?.title)
   const labels = computed(() => props.collections?.map(v => v.name).sort() || [])
@@ -119,5 +122,6 @@
       const cover = await defaultCover()
       form.value.thumb = cover.thumb
     }
+    await askPermission()
   })
 </script>

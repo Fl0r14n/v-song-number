@@ -5,7 +5,7 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 ### Build
 
 * Install global dependencies
-  ```sudo npm i -g @ionic/cli cordova-res```
+  ```sudo npm i -g @ionic/cli```
 * Install dependencies
   ```npm i```
 * Build app
@@ -27,11 +27,11 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 * Copy build files to platform
   ```ionic cap copy```
 * Generate assets (icon and splash)
-  ```cordova-res android --skip-config --copy```
+  ```npx @capacitor/assets generate```
 * Shortcut 
   ```ionic cap sync```
 
-* Add permissions to `AndroidManifest.xml`
+* (Optional) Add permissions to `AndroidManifest.xml`
 
 ```xml
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
@@ -46,13 +46,13 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 * Copy build files to platform
   ```ionic cap copy```
 * Generate assets (icon and splash)
-  ```cordova-res ios --skip-config --copy```
+  ```npx @capacitor/assets generate```
 
 ### Deploy
 
 * Open platform ide for native build. You might need to change path in `capacitor.config.ts`
   ```ionic cap open android```
-  might need to add the path to android studio
+  optional with intellij
   ```CAPACITOR_ANDROID_STUDIO_PATH=/usr/bin/intellij-idea-ultimate-edition ionic cap open android```
 * For iOS open xcode
   ```ionic cap open ios```
