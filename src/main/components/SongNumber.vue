@@ -8,7 +8,6 @@
 <script lang="ts" setup>
   import { IonCol, IonRow } from '@ionic/vue'
   import SongDigit from '@/main/components/SongDigit.vue'
-  import { defineModel } from 'vue'
   import { Digit } from '@/store'
 
   const model = defineModel<Digit[]>()
