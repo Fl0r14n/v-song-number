@@ -1,20 +1,20 @@
-export interface Digit {
+export type Digit = {
   pos: number
   val: number
 }
 
-export interface Book {
+export type Book = {
   title?: string
   description?: string
   thumb?: string
 }
 
-export interface Language {
+export type Language ={
   code?: string
   name?: string
 }
 
-export interface BookResourceCollection {
+export type BookResourceCollection = {
   name?: string
   description?: string
   thumb?: string
@@ -22,7 +22,7 @@ export interface BookResourceCollection {
   selected?: boolean
 }
 
-export interface BookCollection {
+export type BookCollection = {
   name?: string
   books?: Book[]
   reorder?: boolean

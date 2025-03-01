@@ -71,7 +71,9 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
 
   const open = () => {
     const { cast } = globalThis.window?.chrome || {}
-    state.value === ChromeCastState.AVAILABLE && cast.requestSession(onSession)
+    if (state.value === ChromeCastState.AVAILABLE) {
+      cast.requestSession(onSession)
+    }
   }
 
   const close = (s?: ChromeCastState) => {
@@ -93,7 +95,8 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     session.value?.sendMessage(
       NAMESPACE,
       msg,
-      () => {},
+      () => {
+      },
       (err: any) => {
         log.error(`${t('providers.chromecast.error')}${err.description}`)
       }
@@ -103,7 +106,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     log.debug(`${t('providers.chromecast.newSession')}${s.sessionId}`)
     s.addUpdateListener((isAlive: boolean) => {
       log.debug(`${t('providers.chromecast.' + ((isAlive && 'sessionUpdated') || 'sessionRemoved'))}: ${s.sessionId}`)
-      !isAlive && close()
+      if (!isAlive) close()
     })
     s.addMessageListener(NAMESPACE, (ns: string, e: any) => {
       // message received
@@ -125,7 +128,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
   )
 
   // web
-  globalThis.window && (globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init())
+  if (globalThis.window) (globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init())
 
   // mobile
   document.addEventListener('deviceready', () => init())

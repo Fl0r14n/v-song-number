@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia'
-import { Camera, CameraResultType, CameraSource, ImageOptions, PermissionStatus } from '@capacitor/camera'
 import { useLoggerStore } from '@/store/logger.store'
-import { CameraPermissionType } from '@capacitor/camera/dist/esm/definitions'
+import { Camera, CameraResultType, CameraSource, type ImageOptions, type PermissionStatus } from '@capacitor/camera'
+import { type CameraPermissionType } from '@capacitor/camera/dist/esm/definitions'
+import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
 
 const width = 600
@@ -25,8 +25,8 @@ export const useCameraStore = defineStore('CameraStore', () => {
   const askPermission = async (source?: CameraSource) => {
     const permissions: CameraPermissionType[] = []
     if (!source) {
-      !hasCameraPermission.value && permissions.push('camera')
-      !hasPhotosPermission.value && permissions.push('photos')
+      if (!hasCameraPermission.value) permissions.push('camera')
+      if (!hasPhotosPermission.value) permissions.push('photos')
     } else if (source === CameraSource.Camera && !hasCameraPermission.value) {
       permissions.push('camera')
     } else if (source === CameraSource.Photos && !hasPhotosPermission.value) {

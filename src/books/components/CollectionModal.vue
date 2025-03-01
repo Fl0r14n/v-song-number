@@ -57,15 +57,15 @@
     IonReorder,
     IonReorderGroup,
     IonTitle,
-    IonToolbar,
-    ItemReorderEventDetail,
+    IonToolbar, type ItemReorderEventDetail,
+
     modalController
   } from '@ionic/vue'
   import { add, closeCircle, create, trash } from 'ionicons/icons'
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { storeToRefs } from 'pinia'
-  import { BookCollection, useSongBooksStore } from '@/store'
+  import { type BookCollection, useSongBooksStore } from '@/store'
 
   const { t } = useI18n()
   const { dismiss } = modalController

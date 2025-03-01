@@ -3,7 +3,7 @@ export const loadScript = (props: { src: string; attrs?: Record<string, string>;
     if (!import.meta.env.SSR) {
       const script = document.createElement('script')
       const { attrs } = props
-      attrs &&
+      if (attrs)
         Object.keys(attrs).forEach(
           key => (key.startsWith('data-') && script.setAttribute(key, attrs[key])) || ((script as any)[key] = attrs[key])
         )
@@ -12,6 +12,10 @@ export const loadScript = (props: { src: string; attrs?: Record<string, string>;
       script.src = props.src
       script.async = true
       script.defer = true
-      ;(props.el && props.el.appendChild(script)) || document.body.appendChild(script)
+      if (props.el) {
+        props.el.appendChild(script)
+      } else {
+        document.body.appendChild(script)
+      }
     }
   })

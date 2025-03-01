@@ -32,7 +32,11 @@ npm-debug.log*
 /plugins
 /www
 
+
 package-lock.json
 android
 electron
 ios
+/.cert/*
+!/.cert/README.md
+dev-dist

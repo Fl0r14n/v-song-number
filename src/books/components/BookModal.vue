@@ -62,6 +62,8 @@
   </ion-content>
 </template>
 <script lang="ts" setup>
+  import { type Book, type BookCollection, minLengthRule, requiredRule, useCameraStore, useForm, useSongBooksStore } from '@/store'
+  import { CameraSource } from '@capacitor/camera'
   import {
     IonButton,
     IonButtons,
@@ -79,12 +81,10 @@
     IonToolbar,
     modalController
   } from '@ionic/vue'
+  import { camera, closeCircle, image } from 'ionicons/icons'
+  import { storeToRefs } from 'pinia'
   import { computed, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { Book, BookCollection, minLengthRule, requiredRule, useCameraStore, useForm, useSongBooksStore } from '@/store'
-  import { camera, closeCircle, image } from 'ionicons/icons'
-  import { CameraSource } from '@capacitor/camera'
-  import { storeToRefs } from 'pinia'
 
   const props = defineProps<{
     collections?: BookCollection[]

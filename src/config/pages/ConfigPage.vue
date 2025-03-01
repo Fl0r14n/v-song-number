@@ -25,11 +25,13 @@
           <ion-input v-model="endpoint" :label="t('pages.config.collections')" label-placement="floating" />
         </ion-item>
       </ion-item-group>
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <template v-slot:fixed>
+<ion-fab vertical="bottom" horizontal="end" >
         <ion-fab-button @click="importCollection()">
           <ion-icon :icon="add" />
         </ion-fab-button>
       </ion-fab>
+</template>
     </ion-content>
   </ion-page>
 </template>

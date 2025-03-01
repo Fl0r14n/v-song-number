@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue'
-import { InputCustomEvent } from '@ionic/vue'
+import { type InputCustomEvent } from '@ionic/vue'
 
 export type ValidationRule = (value?: string) => boolean
 export type FormValidationRules<T> = {

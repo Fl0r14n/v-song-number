@@ -2,7 +2,8 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
+      <template v-slot:bottom>
+<ion-tab-bar >
         <ion-tab-button tab="main" href="/main">
           <ion-icon :icon="home" />
         </ion-tab-button>
@@ -16,6 +17,7 @@
           <ion-icon :icon="settings" />
         </ion-tab-button>
       </ion-tab-bar>
+</template>
     </ion-tabs>
   </ion-page>
 </template>

@@ -83,9 +83,11 @@
         book: book.value
       }
     })
-    modal.present()
+    await modal.present()
     const { data } = await modal.onDidDismiss()
-    data && (book.value = data)
+    if (data) {
+      book.value = data
+    }
   }
 
   watch(message, async data => {
@@ -97,7 +99,7 @@
         image = `<img src="${image}">`
       }
       const notes = (data.notes && `<ion-card-content>${data.notes}</ion-card-content>`) || ''
-      let alertMessage
+      let alertMessage = ''
       switch (data.type) {
         case 1: {
           alertMessage = `
