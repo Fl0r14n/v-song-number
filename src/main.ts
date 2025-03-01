@@ -13,7 +13,7 @@ import { ro } from '@/i18n/ro'
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 import { createPinia } from 'pinia'
 
-defineCustomElements(globalThis.window)
+await defineCustomElements(globalThis.window)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

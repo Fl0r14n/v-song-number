@@ -6,13 +6,11 @@
           <ion-icon :icon="informationCircle" />
           {{ t('pages.info.title') }}
         </ion-title>
-        <template v-slot:primary>
-<ion-buttons >
+        <ion-buttons slot="primary">
           <ion-fab-button :disabled="castButton.disabled" :color="castButton.color" @click="cast()">
             <ion-icon :src="castButton.src" />
           </ion-fab-button>
         </ion-buttons>
-</template>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">

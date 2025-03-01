@@ -79,13 +79,13 @@
     IonThumbnail,
     IonTitle,
     IonToolbar,
-    ItemReorderEventDetail,
+    type ItemReorderEventDetail,
     modalController
   } from '@ionic/vue'
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { add, create, list, reorderFourOutline, trash } from 'ionicons/icons'
-  import { Book, BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
+  import { type Book, type BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
   import { storeToRefs } from 'pinia'
   import CollectionModal from '@/books/components/CollectionModal.vue'
   import BookModal from '@/books/components/BookModal.vue'
@@ -124,7 +124,7 @@
   }
   const reorderBook = async (collection: BookCollection, { detail }: CustomEvent<ItemReorderEventDetail>) => {
     const { books } = collection
-    books && books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
+    if(books) books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
     await detail.complete(false)
   }
   const editBook = async (b: Book, c: BookCollection) => {
@@ -176,5 +176,5 @@
     })
     await confirm.present()
   }
-  const closeItemSliders = () => slidersRef.value.forEach(v => v.$el.close())
+  const closeItemSliders = () => slidersRef.value.forEach(v => (v as any).$el.close())
 </script>

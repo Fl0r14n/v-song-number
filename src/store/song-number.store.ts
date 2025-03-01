@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { Book, ChromeCastState, Digit, storageRef, useChromeCastStore } from '.'
+import { type Book, ChromeCastState, type Digit, storageRef, useChromeCastStore } from '@/store'
 import { computed } from 'vue'
 import { information, square, play } from 'ionicons/icons'
 
@@ -69,7 +69,7 @@ export const useSongNumberStore = defineStore('SongNumberStore', () => {
   const digitsLength = computed({
     get: () => digits.value.length,
     set: size => {
-      const value = []
+      const value: Digit[] = []
       for (let i = 0; i < size; i++) {
         value.push({
           pos: i,

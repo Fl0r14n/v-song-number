@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import { storageRef } from '@/store/ref'
 import axios from 'axios'
-import { useLoggerStore } from '@/store/logger.store'
-import { Book, BookCollection, BookResourceCollection, Language } from '.'
+import type { Book, BookCollection, BookResourceCollection, Language } from '@/store'
+import { storageRef, useLoggerStore } from '@/store'
 
 const STORAGE_ID_COLLECTIONS = 'song-number-settings-collection'
 const STORAGE_ID_DOWNLOADS = 'song-number-settings-downloads'

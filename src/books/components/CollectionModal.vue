@@ -72,7 +72,7 @@
   const slidersRef = ref<(typeof IonItemSliding)[]>([])
   const songBooksStore = useSongBooksStore()
   const { collections } = storeToRefs(songBooksStore)
-  const closeItemSliders = () => slidersRef.value.forEach(v => v.$el.close())
+  const closeItemSliders = () => slidersRef.value.forEach(v => (v as any).$el.close())
 
   const addCollection = async () => {
     const confirm = await alertController.create({

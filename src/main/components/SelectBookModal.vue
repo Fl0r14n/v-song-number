@@ -49,7 +49,7 @@
     IonToolbar,
     modalController
   } from '@ionic/vue'
-  import { Book, BookCollection } from '@/store'
+  import { type Book, type BookCollection } from '@/store'
 
   const { t } = useI18n()
   defineProps<{

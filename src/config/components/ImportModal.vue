@@ -60,7 +60,7 @@
     IonIcon,
     modalController
   } from '@ionic/vue'
-  import { BookResourceCollection, Language, useSongBooksStore } from '@/store'
+  import { type BookResourceCollection, type Language, useSongBooksStore } from '@/store'
   import { storeToRefs } from 'pinia'
   import { onMounted, watch, computed } from 'vue'
 

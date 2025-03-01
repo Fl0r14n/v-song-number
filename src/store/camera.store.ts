@@ -1,6 +1,12 @@
 import { useLoggerStore } from '@/store/logger.store'
-import { Camera, CameraResultType, CameraSource, type ImageOptions, type PermissionStatus } from '@capacitor/camera'
-import { type CameraPermissionType } from '@capacitor/camera/dist/esm/definitions'
+import {
+  Camera,
+  type CameraPermissionType,
+  CameraResultType,
+  CameraSource,
+  type ImageOptions,
+  type PermissionStatus
+} from '@capacitor/camera'
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
 
