@@ -1,19 +1,16 @@
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
-
 import fs from 'fs'
+import { fileURLToPath, URL } from 'node:url'
 
 let key, cert
-
 try {
   key = fs.readFileSync('.cert/key.pem')
   cert = fs.readFileSync('.cert/cert.pem')
 } catch {
   /* empty */
 }
-
 const https =
   (key &&
     cert && {
@@ -22,7 +19,6 @@ const https =
     }) ||
   undefined
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -53,14 +49,20 @@ export default defineConfig({
       }
     })
   ],
+  define: { 'process.env': process.env || {} },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   server: {
-    port: 4200,
-    strictPort: true,
-    https
+    host: true,
+    port: 3000,
+    https,
+    hmr: {
+      host: 'vite.local.dev',
+      port: 3000,
+      protocol: 'wss'
+    }
   }
 })

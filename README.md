@@ -11,6 +11,13 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 * Build app
   ```ionic build```
 
+### Run
+
+* Optional generate [certs](.cert/README.md) for https for local dev
+
+* Run app in browser
+  ```npm run dev```
+
 ### Electron
 
 * Add deployment platform

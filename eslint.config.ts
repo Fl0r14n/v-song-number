@@ -1,15 +1,25 @@
-import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import pluginVitest from '@vitest/eslint-plugin'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import globals from 'globals'
 
-export default [
-  { files: ['**/*.{js,mjs,cjs,ts,vue}'] },
+export default defineConfigWithVueTs(
   {
-    ignores: [
-      '.DS_Store',
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    }
+  },
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{ts,mts,tsx,vue}']
+  },
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['.DS_Store',
       '**/node_modules/**',
       '**/coverage/**',
       '**/dist/**',
@@ -39,37 +49,19 @@ export default [
       '*.sw?'
     ]
   },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-  skipFormatting,
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parserOptions: {
-        parser: tseslint.parser
-      }
-    }
-  },
+  pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*']
   },
+  skipFormatting,
   {
     rules: {
+      semi: ['error', 'never'],
+      '@typescript-eslint/no-explicit-any': 'off',
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      'vue/no-deprecated-slot-attribute': 'off',
-      semi: ['error', 'never']
-    }
-  },
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node
-      }
     }
   }
-]
+)
