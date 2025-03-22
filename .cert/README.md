@@ -22,6 +22,6 @@ mkcert -install
 ### How to generate
 
 ```shell
-mkcert -key-file key.pem -cert-file cert.pem localhost 127.0.0.1 ::1
+mkcert -key-file key.pem -cert-file cert.pem localhost 127.0.0.1 "*.local.dev" ::1
 chmod 604 *.pem
 ```

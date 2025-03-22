@@ -15,7 +15,7 @@
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-item>
-        <ion-textarea clearInput rows="6" :placeholder="t('pages.info.textArea')" v-model="info" />
+        <ion-textarea clearInput :rows="6" :placeholder="t('pages.info.textArea')" v-model="info" />
       </ion-item>
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button :disabled="presentedButton.disabled" :color="presentedButton.color" @click="readPresented()">

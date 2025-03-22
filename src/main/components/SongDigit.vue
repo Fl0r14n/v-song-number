@@ -22,7 +22,7 @@
   const dec = () => change(-1)
 
   const change = (value: number) => {
-    let val = model.value + value
+    let val = (model.value || 0) + value
     if (val < 0) {
       val = 9
     } else if (val > 9) {

@@ -19,35 +19,7 @@ export default defineConfigWithVueTs(
   },
   {
     name: 'app/files-to-ignore',
-    ignores: ['.DS_Store',
-      '**/node_modules/**',
-      '**/coverage/**',
-      '**/dist/**',
-      '**/ios/**',
-      '**/android/**',
-      '**/dev-dist/**',
-
-      '.env.local',
-      '.env.*.local',
-
-      'npm-debug.log*',
-      'yarn-debug.log*',
-      'yarn-error.log*',
-      'pnpm-debug.log*',
-
-      'npm-debug.log*',
-      'yarn-debug.log*',
-      'yarn-error.log*',
-      'pnpm-debug.log*',
-
-      '.idea',
-      '.vscode',
-      '*.suo',
-      '*.ntvs*',
-      '*.njsproj',
-      '*.sln',
-      '*.sw?'
-    ]
+    ignores: ['**/dist/**', '**/dev-dist/**', '**/dist-ssr/**', '**/coverage/**', '**/node_modules/**']
   },
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
@@ -58,10 +30,11 @@ export default defineConfigWithVueTs(
   skipFormatting,
   {
     rules: {
-      semi: ['error', 'never'],
-      '@typescript-eslint/no-explicit-any': 'off',
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      semi: ['error', 'never'],
+      '@typescript-eslint/no-explicit-any': 'off',
+      'vue/no-deprecated-slot-attribute': 'off'
     }
   }
 )

@@ -31,9 +31,9 @@
             label-placement="floating"
             :clear-input="true"
             :counter="true"
-            maxlength="128"
+            :maxlength="128"
             required
-            minlength="5"
+            :minlength="5"
             :class="classes.title"
             @ionBlur="touch" />
           <ion-input
@@ -43,7 +43,7 @@
             label-placement="floating"
             :clear-input="true"
             :counter="true"
-            maxlength="256"
+            :maxlength="256"
             @ionBlur="touch" />
           <ion-select
             v-model="form.label"

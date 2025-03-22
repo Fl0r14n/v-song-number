@@ -13,8 +13,6 @@ import { ro } from '@/i18n/ro'
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 import { createPinia } from 'pinia'
 
-await defineCustomElements(globalThis.window)
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -74,4 +72,7 @@ const app = createApp(App)
   })
   .use(router)
   .use(i18n)
-router.isReady().then(() => app.mount('#app'))
+router.isReady().then(async () => {
+  await defineCustomElements(globalThis.window)
+  app.mount('#app')
+})
