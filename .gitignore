@@ -38,6 +38,7 @@ bun.lock
 android
 electron
 ios
+icons
 /.cert/*
 !/.cert/README.md
 dev-dist
