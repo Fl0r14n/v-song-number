@@ -72,6 +72,7 @@ const app = createApp(App)
   })
   .use(router)
   .use(i18n)
+
 router.isReady().then(async () => {
   await defineCustomElements(globalThis.window)
   app.mount('#app')

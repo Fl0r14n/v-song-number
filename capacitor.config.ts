@@ -16,7 +16,7 @@ const config: CapacitorConfig = {
   cordova: {
     preferences: {
       ScrollEnabled: 'false',
-      'android-minSdkVersion': '22',
+      // 'android-minSdkVersion': '24',
       BackupWebStorage: 'none',
       SplashMaintainAspectRatio: 'true',
       FadeSplashScreenDuration: '300',
