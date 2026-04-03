@@ -27,11 +27,11 @@
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "assets": "npx @capacitor/assets generate",
-    "android": "ionic cap add android",
-    "sync": "ionic cap sync"
+    "android": "npx ionic cap add android",
+    "sync": "npx ionic cap sync"
   },
   "dependencies": {
-    "@capacitor/android": "^8.3.0",
+    "@capacitor/android": "8.3.0",
     "@capacitor/app": "^8.1.0",
     "@capacitor/camera": "^8.0.2",
     "@capacitor/core": "^8.3.0",
@@ -74,7 +74,6 @@
     "sass-embedded": "^1.99.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",
-    "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.1.2",
     "vue-tsc": "^3.2.6"
   }
