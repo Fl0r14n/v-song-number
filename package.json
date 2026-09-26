@@ -25,7 +25,7 @@
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
-    "assets": "capacitor-assets generate",
+    "assets": "bunx @capacitor/assets generate",
     "android": "cap add android",
     "sync": "vite build && cap sync"
   },
@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
-    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.5.2",
     "@tsconfig/node24": "^24.0.5",
     "@types/node": "^26.6.3",
