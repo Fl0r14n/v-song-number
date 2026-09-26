@@ -54,7 +54,8 @@ const pinia = createPinia()
 const app = createApp(App)
   .use(pinia)
   .use(IonicVue, {
-    experimentalCloseWatcher: true,
+    // no experimentalCloseWatcher: the Capacitor WebView supports CloseWatcher but never fires it for the
+    // hardware back button (it sends the `backbutton` event), so Ionic's back handlers would never run
     innerHTMLTemplatesEnabled: true
   })
   .use(router)
