@@ -13,7 +13,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-reorder-group :disabled="false" @ionItemReorder="reorderCollection($event)">
-      <ion-item-sliding v-for="(collection, i) in collections" :key="i" ref="slidersRef">
+      <ion-item-sliding v-for="collection in collections" :key="objectKey(collection)" ref="slidersRef">
         <ion-item>
           <ion-label>{{ collection.name }}</ion-label>
           <ion-reorder slot="end" />
@@ -65,7 +65,7 @@
   import { storeToRefs } from 'pinia'
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { type BookCollection, useSongBooksStore } from '@/store'
+  import { type BookCollection, objectKey, useSongBooksStore } from '@/store'
 
   const { t } = useI18n()
   const { dismiss } = modalController

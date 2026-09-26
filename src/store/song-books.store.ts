@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Book, BookCollection, BookResourceCollection, Language } from '@/store'
-import { storageRef, useLoggerStore } from '@/store'
+import { isSameBook, storageRef, useLoggerStore } from '@/store'
 
 const STORAGE_ID_COLLECTIONS = 'song-number-settings-collection'
 const STORAGE_ID_DOWNLOADS = 'song-number-settings-downloads'
@@ -35,7 +35,7 @@ export const useSongBooksStore = defineStore('SongBooksStore', () => {
   }
   const deleteBook = (book: Book, collection: BookCollection) => {
     if (collection.books) {
-      const idx = collection.books.findIndex(i => i.title === book.title && i.description === book.description)
+      const idx = collection.books.findIndex(i => isSameBook(i, book))
       if (idx > -1) {
         collection.books.splice(idx, 1)
       }

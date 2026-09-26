@@ -13,12 +13,11 @@
   </ion-header>
   <ion-content>
     <ion-list inset>
-      <template v-for="(collection, i) in collections" :key="i">
+      <template v-for="collection in collections" :key="objectKey(collection)">
         <ion-item-divider>
           <ion-label>{{ collection.name }}</ion-label>
         </ion-item-divider>
-        <ion-item v-for="(item, j) of collection.books" :key="j" @click="selectBook(item)"
-                  :color="item == book ? 'primary' : ''">
+        <ion-item v-for="item of collection.books" :key="objectKey(item)" @click="selectBook(item)" :color="isSameBook(item, book) ? 'primary' : ''">
           <ion-thumbnail slot="start">
             <img :src="item.thumb" alt="item-thumb" />
           </ion-thumbnail>
@@ -49,7 +48,7 @@
   } from '@ionic/vue'
   import { closeCircle } from 'ionicons/icons'
   import { useI18n } from 'vue-i18n'
-  import { type Book, type BookCollection } from '@/store'
+  import { type Book, type BookCollection, isSameBook, objectKey } from '@/store'
 
   const { t } = useI18n()
   defineProps<{

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { i18n } from '@/i18n'
 import { loadScript, useLoggerStore } from '@/store'
 
 declare global {
@@ -27,7 +27,7 @@ const CAST_SCRIPT = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js'
 
 export const useChromeCastStore = defineStore('ChromeCastStore', () => {
   const log = useLoggerStore()
-  const { t } = useI18n()
+  const { t } = i18n.global
   const state = ref(ChromeCastState.DISABLED)
   const session = ref()
   const event = ref()
@@ -71,8 +71,9 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
 
   const open = () => {
     const { cast } = globalThis.window?.chrome || {}
-    if (state.value === ChromeCastState.AVAILABLE) {
-      cast.requestSession(onSession)
+    // the device picker scans on its own, so don't wait for a receiver to be discovered first
+    if (cast && (state.value & ChromeCastState.INITIALIZED) === ChromeCastState.INITIALIZED) {
+      cast.requestSession(onSession, (err: any) => log.debug(`${t('providers.chromecast.error')}${err.description || err.code}`))
     }
   }
 

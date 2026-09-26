@@ -7,9 +7,7 @@ import './theme.css'
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 import { createPinia } from 'pinia'
-import { createI18n } from 'vue-i18n'
-import { en } from '@/i18n/en'
-import { ro } from '@/i18n/ro'
+import { i18n } from '@/i18n'
 import LayoutPage from '@/layout/pages/LayoutPage.vue'
 
 const router = createRouter({
@@ -50,16 +48,6 @@ const router = createRouter({
       ]
     }
   ]
-})
-const i18n = createI18n({
-  legacy: false,
-  fallbackLocale: 'en',
-  messages: {
-    en,
-    ro
-  },
-  fallbackWarn: false,
-  missingWarn: false
 })
 const pinia = createPinia()
 

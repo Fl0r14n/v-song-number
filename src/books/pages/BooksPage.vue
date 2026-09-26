@@ -14,7 +14,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-item-group v-for="(collection, i) in collections" :key="i">
+      <ion-item-group v-for="collection in collections" :key="objectKey(collection)">
         <ion-item-sliding ref="slidersRef">
           <ion-item>
             <ion-label color="medium">{{ collection.name }}</ion-label>
@@ -26,8 +26,8 @@
           </ion-item-options>
         </ion-item-sliding>
         <ion-reorder-group :disabled="!collection.reorder" @ionItemReorder="reorderBook(collection, $event)">
-          <ion-item-sliding v-for="(b, j) in collection.books" :key="j" ref="slidersRef">
-            <ion-item :color="b === book ? 'primary' : ''">
+          <ion-item-sliding v-for="b in collection.books" :key="objectKey(b)" ref="slidersRef">
+            <ion-item :color="isSameBook(b, book) ? 'primary' : ''">
               <ion-thumbnail slot="start">
                 <img :src="b.thumb" alt="book-thumb" />
               </ion-thumbnail>
@@ -88,7 +88,7 @@
   import { useI18n } from 'vue-i18n'
   import BookModal from '@/books/components/BookModal.vue'
   import CollectionModal from '@/books/components/CollectionModal.vue'
-  import { type Book, type BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
+  import { type Book, type BookCollection, isSameBook, objectKey, useSongBooksStore, useSongNumberStore } from '@/store'
 
   const { t } = useI18n()
   const songNumberStore = useSongNumberStore()

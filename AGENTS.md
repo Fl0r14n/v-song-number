@@ -106,7 +106,8 @@ Each feature folder contains `components/` and `pages/`.
 
 - Vue I18n with composition API (`legacy: false`)
 - Translation files: `src/i18n/{locale}.ts` (en, ro)
-- Use `useI18n()` composable in components
+- The i18n instance lives in `src/i18n/index.ts`; the locale is the device language (`navigator.languages`), falling back to `en`
+- Use `useI18n()` composable in components; outside component setup (e.g. Pinia stores) use `i18n.global.t`
 - Translation key pattern: `pages.{feature}.{key}` or `providers.{service}.{key}`
 
 ## Important Notes
@@ -121,6 +122,7 @@ Each feature folder contains `components/` and `pages/`.
 - Global `window.chrome.cast` declarations for Chromecast sender API
 - TypeScript 7 (no JS compiler API) is type-checked with `vue-tsgo`. Don't add `vue-tsc`, or any tool needing the TS 6 API (e.g. typescript-eslint), without a `@typescript/typescript6` alias
 - `vite.config.ts` marks `@ionic/core/components` side-effect free (`build.rolldownOptions.treeshake.moduleSideEffects`). Without it, Ionic 9's `exports` map hides the nested `sideEffects: false` and every Ionic component gets bundled (~1.1 MB instead of ~0.8 MB)
+- Books are compared by content with `isSameBook` (persisted/re-imported copies are different objects); reorderable lists use `objectKey()` for `v-for` keys since collection names may repeat
 - There is no test runner; the unused Vitest/jsdom setup was removed. `bun test` is the lightest option if tests are added
 - `vite.config.ts` reads `.cert/key.pem` and `.cert/cert.pem` if they exist and otherwise falls back to HTTP. HMR is hard-wired to `wss://vite.local.dev:3000`
 - The README says the app ID is in `src/providers/chromecast.ts`. That path is stale: the ID is `APPLICATION_ID` in `src/store/crome-cast.store.ts`

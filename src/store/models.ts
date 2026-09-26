@@ -27,3 +27,6 @@ export type BookCollection = {
   books?: Book[]
   reorder?: boolean
 }
+
+// books are persisted and re-imported, so compare by content rather than object identity
+export const isSameBook = (a?: Book, b?: Book) => !!a && !!b && a.title === b.title && a.description === b.description

@@ -2,8 +2,14 @@ import { Preferences } from '@capacitor/preferences'
 import { ref, watch } from 'vue'
 
 const get = async (key: string) => {
-  const { value } = await Preferences.get({ key })
-  return (value && JSON.parse(value)) || undefined
+  try {
+    const { value } = await Preferences.get({ key })
+    return (value && JSON.parse(value)) || undefined
+  } catch (err) {
+    // corrupted or unreadable value: fall back to the initial one (it gets overwritten on the next change)
+    console.warn(`storage: ignoring value of ${key}`, err)
+    return undefined
+  }
 }
 
 const set = (key: string, value: any) => Preferences.set({ key, value: JSON.stringify(value) })
