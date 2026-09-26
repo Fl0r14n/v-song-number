@@ -10,6 +10,5 @@
   import SongDigit from '@/main/components/SongDigit.vue'
   import { type Digit } from '@/store'
 
-
   const model = defineModel<Digit[]>()
 </script>

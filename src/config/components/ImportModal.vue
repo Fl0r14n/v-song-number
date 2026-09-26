@@ -39,30 +39,29 @@
   </ion-content>
 </template>
 <script lang="ts" setup>
-  import { ref } from 'vue'
-  import { closeCircle } from 'ionicons/icons'
-  import { useI18n } from 'vue-i18n'
   import {
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
+    IonAvatar,
     IonButton,
+    IonButtons,
+    IonCheckbox,
     IonContent,
-    IonList,
-    IonListHeader,
+    IonHeader,
+    IonIcon,
     IonItem,
     IonLabel,
+    IonList,
+    IonListHeader,
     IonSelect,
     IonSelectOption,
-    IonAvatar,
-    IonCheckbox,
-    IonIcon,
+    IonTitle,
+    IonToolbar,
     modalController
   } from '@ionic/vue'
-  import { type BookResourceCollection, type Language, useSongBooksStore } from '@/store'
+  import { closeCircle } from 'ionicons/icons'
   import { storeToRefs } from 'pinia'
-  import { onMounted, watch, computed } from 'vue'
+  import { computed, onMounted, ref, watch } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import { type BookResourceCollection, type Language, useSongBooksStore } from '@/store'
 
   const { t } = useI18n()
   const language = ref<Language>()
@@ -84,12 +83,7 @@
   })
 
   const importCollection = async () => {
-    const paths = new Set(
-      index.value
-        ?.filter(v => v.selected)
-        .map(v => v.paths)
-        .reduce((a, b) => [...a, ...b], [])
-    )
+    const paths = new Set(index.value?.filter(v => v.selected).flatMap(v => v.paths))
     const cols = await getCollections([...paths])
     collections.value = [...collections.value, ...cols]
     await modalController.dismiss()

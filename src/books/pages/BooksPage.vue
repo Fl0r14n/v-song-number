@@ -82,13 +82,13 @@
     type ItemReorderEventDetail,
     modalController
   } from '@ionic/vue'
+  import { add, create, list, reorderFourOutline, trash } from 'ionicons/icons'
+  import { storeToRefs } from 'pinia'
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { add, create, list, reorderFourOutline, trash } from 'ionicons/icons'
-  import { type Book, type BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
-  import { storeToRefs } from 'pinia'
-  import CollectionModal from '@/books/components/CollectionModal.vue'
   import BookModal from '@/books/components/BookModal.vue'
+  import CollectionModal from '@/books/components/CollectionModal.vue'
+  import { type Book, type BookCollection, useSongBooksStore, useSongNumberStore } from '@/store'
 
   const { t } = useI18n()
   const songNumberStore = useSongNumberStore()
@@ -124,7 +124,7 @@
   }
   const reorderBook = async (collection: BookCollection, { detail }: CustomEvent<ItemReorderEventDetail>) => {
     const { books } = collection
-    if(books) books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
+    if (books) books.splice(detail.to, 0, books.splice(detail.from, 1)[0])
     await detail.complete(false)
   }
   const editBook = async (b: Book, c: BookCollection) => {
@@ -176,5 +176,7 @@
     })
     await confirm.present()
   }
-  const closeItemSliders = () => slidersRef.value.forEach(v => (v as any).$el.close())
+  const closeItemSliders = () => {
+    for (const v of slidersRef.value) (v as any).$el.close()
+  }
 </script>

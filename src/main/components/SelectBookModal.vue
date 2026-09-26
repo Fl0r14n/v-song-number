@@ -32,8 +32,6 @@
   </ion-content>
 </template>
 <script lang="ts" setup>
-  import { closeCircle } from 'ionicons/icons'
-  import { useI18n } from 'vue-i18n'
   import {
     IonButton,
     IonButtons,
@@ -49,6 +47,8 @@
     IonToolbar,
     modalController
   } from '@ionic/vue'
+  import { closeCircle } from 'ionicons/icons'
+  import { useI18n } from 'vue-i18n'
   import { type Book, type BookCollection } from '@/store'
 
   const { t } = useI18n()

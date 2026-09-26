@@ -3,16 +3,18 @@
 ## Commands
 
 ```bash
-npm run dev              # Start dev server (https://vite.local.dev:3000)
-npm run build            # Type check + production build
-npm run build-only       # Production build without type checking
-npm run type-check       # Type check with vue-tsgo (TypeScript 7)
-npm run test:unit        # Run all vitest tests
-npm run test:unit -- -t "test name"  # Run a single test by name
-npm run test:unit -- src/path/to/file.test.ts  # Run tests in a specific file
-npm run lint             # Run ESLint with auto-fix
-npm run format           # Run Prettier on src/
-npm run sync             # Ionic Capacitor sync (build + copy native)
+bun i                    # Install dependencies (bun is the package manager)
+bun run dev              # Start dev server (https://vite.local.dev:3000)
+bun run build            # Type check + production build
+bun run build-only       # Production build without type checking
+bun run type-check       # Type check with vue-tsgo (TypeScript 7)
+bun run test:unit        # Run all vitest tests
+bun run test:unit -t "test name"  # Run a single test by name
+bun run test:unit src/path/to/file.test.ts  # Run tests in a specific file
+bun run lint             # Biome lint
+bun run format           # Biome format (write)
+bun run check            # Biome lint + format + organize imports (write)
+bun run sync             # Ionic Capacitor sync (build + copy native)
 ```
 
 ## Project Structure
@@ -35,7 +37,7 @@ Each feature folder contains `components/` and `pages/`.
 
 ## Code Style
 
-### Formatting (Prettier)
+### Formatting (Biome, `biome.json`)
 
 - No semicolons
 - Single quotes for strings
@@ -44,14 +46,16 @@ Each feature folder contains `components/` and `pages/`.
 - No trailing commas
 - Arrow function parens: avoid when single parameter
 - Closing bracket on same line as props (`bracketSameLine: true`)
-- Vue `<script>` and `<style>` tags indented (`vueIndentScriptAndStyle: true`)
+- Vue `<script>` and `<style>` contents indented (`html.formatter.indentScriptAndStyle`)
+- Imports are sorted by Biome, except `src/store/index.ts`, whose barrel export order is intentional (excluded via override)
+- In `.vue` files, unused variable/import and `useImportType` rules are off: Biome can't see template usage
 
 ### TypeScript
 
 - Strict mode enabled via `@vue/tsconfig`
 - Use `type` imports when only needed for types
 - Path alias: `@/*` resolves to `./src/*`
-- No explicit `any` enforcement (`@typescript-eslint/no-explicit-any: off`)
+- No explicit `any` enforcement (Biome `noExplicitAny: off`)
 - Define types/interfaces in `src/store/models.ts` for shared types
 - Use `Record<string, string>` for dynamic object types
 
@@ -117,11 +121,11 @@ Each feature folder contains `components/` and `pages/`.
 - Target platforms: Android, iOS, Web
 - Uses `@ionic/pwa-elements` for web-based modals/toasts
 - Global `window.chrome.cast` declarations for Chromecast sender API
-- TypeScript runs side by side: `typescript` is aliased to `@typescript/typescript6` (typescript-eslint needs the TS 6 API), and `typescript7` is TS 7, used by `vue-tsgo --tsdk typescript7` for type checking. Don't reinstall plain `typescript@7` or `vue-tsc`; both break on TS 7
+- TypeScript 7 (no JS compiler API) is type-checked with `vue-tsgo`. Don't add `vue-tsc`, or any tool needing the TS 6 API (e.g. typescript-eslint), without a `@typescript/typescript6` alias
 - There are no unit tests yet. Vitest is configured with jsdom (`vitest.config.ts` merges `vite.config.ts`), but the repo has no `*.test.ts` or `*.spec.ts` files
 - `vite.config.ts` reads `.cert/key.pem` and `.cert/cert.pem` if they exist and otherwise falls back to HTTP. HMR is hard-wired to `wss://vite.local.dev:3000`
 - The README says the app ID is in `src/providers/chromecast.ts`. That path is stale: the ID is `APPLICATION_ID` in `src/store/crome-cast.store.ts`
-- Native builds: `npm run sync`, then `npx ionic cap open android` (or `ios`). Android version is set in `android/app/build.gradle`; regenerate icons/splash with `npm run assets`
+- Native builds: `bun run sync`, then `npx ionic cap open android` (or `ios`). Android version is set in `android/app/build.gradle`; regenerate icons/splash with `bun run assets`
 
 ## Architecture
 

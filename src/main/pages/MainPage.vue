@@ -61,13 +61,13 @@
     IonToolbar,
     modalController
   } from '@ionic/vue'
-  import { useI18n } from 'vue-i18n'
   import { musicalNotes } from 'ionicons/icons'
-  import { useSongBooksStore, useSongNumberStore } from '@/store'
   import { storeToRefs } from 'pinia'
-  import SongNumber from '@/main/components/SongNumber.vue'
-  import SelectBookModal from '@/main/components/SelectBookModal.vue'
   import { watch } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import SelectBookModal from '@/main/components/SelectBookModal.vue'
+  import SongNumber from '@/main/components/SongNumber.vue'
+  import { useSongBooksStore, useSongNumberStore } from '@/store'
 
   const { t } = useI18n()
   const songNumberStore = useSongNumberStore()

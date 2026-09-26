@@ -32,22 +32,22 @@
 </template>
 <script setup lang="ts">
   import {
-    IonContent,
-    IonHeader,
-    IonToolbar,
-    IonIcon,
-    IonPage,
-    IonTitle,
-    IonFabButton,
     IonButtons,
-    IonTextarea,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonHeader,
+    IonIcon,
     IonItem,
-    IonFab
+    IonPage,
+    IonTextarea,
+    IonTitle,
+    IonToolbar
   } from '@ionic/vue'
-  import { useI18n } from 'vue-i18n'
   import { informationCircle } from 'ionicons/icons'
-  import { useSongNumberStore } from '@/store'
   import { storeToRefs } from 'pinia'
+  import { useI18n } from 'vue-i18n'
+  import { useSongNumberStore } from '@/store'
 
   const { t } = useI18n()
   const songNumberStore = useSongNumberStore()

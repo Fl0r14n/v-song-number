@@ -9,9 +9,9 @@ const get = async (key: string) => {
 const set = (key: string, value: any) => Preferences.set({ key, value: JSON.stringify(value) })
 
 export const storageRef = <T>(key: string, initial?: T, map?: (v: any) => T) => {
-  const model = ref<T>((map && map(initial)) || (initial as T))
+  const model = ref<T>(map?.(initial) || (initial as T))
   get(key).then(v => {
-    model.value = (map && map(v || initial)) || v || initial
+    model.value = map?.(v || initial) || v || initial
     // start watching after we get the value from storage
     watch(
       model,

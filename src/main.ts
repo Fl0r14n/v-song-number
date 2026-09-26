@@ -1,17 +1,16 @@
-import { createApp } from 'vue'
+import { IonicVue } from '@ionic/vue'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
+import { createApp } from 'vue'
 import App from './App.vue'
 
-import { IonicVue } from '@ionic/vue'
-
 import './theme/global.scss'
-import LayoutPage from '@/layout/pages/LayoutPage.vue'
-import { createI18n } from 'vue-i18n'
-import { en } from '@/i18n/en'
-import { ro } from '@/i18n/ro'
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 import { createPinia } from 'pinia'
+import { createI18n } from 'vue-i18n'
+import { en } from '@/i18n/en'
+import { ro } from '@/i18n/ro'
+import LayoutPage from '@/layout/pages/LayoutPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

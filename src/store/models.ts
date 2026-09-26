@@ -9,7 +9,7 @@ export type Book = {
   thumb?: string
 }
 
-export type Language ={
+export type Language = {
   code?: string
   name?: string
 }

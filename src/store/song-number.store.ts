@@ -1,7 +1,7 @@
+import { information, play, square } from 'ionicons/icons'
 import { defineStore, storeToRefs } from 'pinia'
-import { type Book, ChromeCastState, type Digit, storageRef, useChromeCastStore } from '@/store'
 import { computed } from 'vue'
-import { information, square, play } from 'ionicons/icons'
+import { type Book, ChromeCastState, type Digit, storageRef, useChromeCastStore } from '@/store'
 
 const STORAGE_ID_DIGITS = 'song-number-settings-digits'
 const STORAGE_ID_NOTES = 'song-number-settings-notes'

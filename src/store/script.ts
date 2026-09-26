@@ -3,10 +3,13 @@ export const loadScript = (props: { src: string; attrs?: Record<string, string>;
     if (!import.meta.env.SSR) {
       const script = document.createElement('script')
       const { attrs } = props
-      if (attrs)
-        Object.keys(attrs).forEach(
-          key => (key.startsWith('data-') && script.setAttribute(key, attrs[key])) || ((script as any)[key] = attrs[key])
-        )
+      for (const [key, value] of Object.entries(attrs || {})) {
+        if (key.startsWith('data-')) {
+          script.setAttribute(key, value)
+        } else {
+          Reflect.set(script, key, value)
+        }
+      }
       script.addEventListener('load', resolve)
       script.addEventListener('error', reject)
       script.src = props.src

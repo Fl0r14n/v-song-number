@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { loadScript, useLoggerStore } from '@/store'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { loadScript, useLoggerStore } from '@/store'
 
 declare global {
   interface Window {
@@ -95,8 +95,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
     session.value?.sendMessage(
       NAMESPACE,
       msg,
-      () => {
-      },
+      () => {},
       (err: any) => {
         log.error(`${t('providers.chromecast.error')}${err.description}`)
       }
@@ -105,10 +104,10 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
   const onSession = (s: any) => {
     log.debug(`${t('providers.chromecast.newSession')}${s.sessionId}`)
     s.addUpdateListener((isAlive: boolean) => {
-      log.debug(`${t('providers.chromecast.' + ((isAlive && 'sessionUpdated') || 'sessionRemoved'))}: ${s.sessionId}`)
+      log.debug(`${t(`providers.chromecast.${(isAlive && 'sessionUpdated') || 'sessionRemoved'}`)}: ${s.sessionId}`)
       if (!isAlive) close()
     })
-    s.addMessageListener(NAMESPACE, (ns: string, e: any) => {
+    s.addMessageListener(NAMESPACE, (_ns: string, e: any) => {
       // message received
       log.debug(`${t('providers.chromecast.messageReceived')}${e}`)
       event.value = e
@@ -128,7 +127,7 @@ export const useChromeCastStore = defineStore('ChromeCastStore', () => {
   )
 
   // web
-  if (globalThis.window) (globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init())
+  if (globalThis.window) globalThis.window.__onGCastApiAvailable = (isAvailable: boolean) => isAvailable && init()
 
   // mobile
   document.addEventListener('deviceready', () => init())

@@ -14,8 +14,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons'
   import { IonButton, IonIcon, IonLabel } from '@ionic/vue'
+  import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons'
 
   const model = defineModel<number>()
   const inc = () => change(+1)

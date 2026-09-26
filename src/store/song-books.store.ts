@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import axios from 'axios'
+import { defineStore } from 'pinia'
 import type { Book, BookCollection, BookResourceCollection, Language } from '@/store'
 import { storageRef, useLoggerStore } from '@/store'
 
@@ -46,7 +46,7 @@ export const useSongBooksStore = defineStore('SongBooksStore', () => {
           })
           .then(r => r.data)
       )
-    ).then(v => v.reduce((a, b) => [...a, ...b]))
+    ).then(v => v.flatMap(c => c || []))
   const addBook = (book: Book, collectionName: string) => {
     const collection = collections.value.find(c => c.name === collectionName)
     if (collection) {

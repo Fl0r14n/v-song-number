@@ -34,32 +34,32 @@
   </ion-page>
 </template>
 <script setup lang="ts">
-  import { computed } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  import { add, settings } from 'ionicons/icons'
-  import { storeToRefs } from 'pinia'
   import {
     IonContent,
-    IonHeader,
-    IonIcon,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonItemGroup,
-    IonLabel,
     IonFab,
     IonFabButton,
+    IonHeader,
+    IonIcon,
     IonInput,
-    IonSelect,
-    IonSelectOption,
     IonItem,
     IonItemDivider,
+    IonItemGroup,
+    IonLabel,
+    IonPage,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
     IonToggle,
+    IonToolbar,
     modalController,
     useIonRouter
   } from '@ionic/vue'
-  import { LogLevel, useLoggerStore, useSongBooksStore, useSongNumberStore } from '@/store'
+  import { add, settings } from 'ionicons/icons'
+  import { storeToRefs } from 'pinia'
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import ImportModal from '@/config/components/ImportModal.vue'
+  import { LogLevel, useLoggerStore, useSongBooksStore, useSongNumberStore } from '@/store'
 
   const { t } = useI18n()
   const router = useIonRouter()

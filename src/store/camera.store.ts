@@ -1,4 +1,3 @@
-import { useLoggerStore } from '@/store/logger.store'
 import {
   Camera,
   type CameraPermissionType,
@@ -9,6 +8,7 @@ import {
 } from '@capacitor/camera'
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
+import { useLoggerStore } from '@/store/logger.store'
 
 const width = 600
 const height = 600

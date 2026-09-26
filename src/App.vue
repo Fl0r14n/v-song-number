@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
+  import { App } from '@capacitor/app'
+  import { SplashScreen } from '@capacitor/splash-screen'
   import { IonApp, IonRouterOutlet, useBackButton, useIonRouter } from '@ionic/vue'
   import { onMounted } from 'vue'
-  import { SplashScreen } from '@capacitor/splash-screen'
-  import { App } from '@capacitor/app'
 
   const ionRouter = useIonRouter()
   useBackButton(-1, () => {

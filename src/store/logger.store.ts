@@ -1,6 +1,6 @@
+import { toastController } from '@ionic/vue'
 import { defineStore } from 'pinia'
 import { storageRef } from '@/store'
-import { toastController } from '@ionic/vue'
 
 const STORAGE_ID_DEBUG = 'song-number-settings-log-level'
 

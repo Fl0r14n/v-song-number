@@ -1,10 +1,10 @@
+// import { VitePWA } from 'vite-plugin-pwa'
+import fs from 'node:fs'
+import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
-// import { VitePWA } from 'vite-plugin-pwa'
-import fs from 'fs'
-import { fileURLToPath, URL } from 'node:url'
 
-let key, cert
+let key: Buffer | undefined, cert: Buffer | undefined
 try {
   key = fs.readFileSync('.cert/key.pem')
   cert = fs.readFileSync('.cert/cert.pem')
@@ -21,7 +21,7 @@ const https =
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue()
     // VitePWA({
     //   injectRegister: 'auto',
     //   registerType: 'autoUpdate',
