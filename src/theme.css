@@ -15,28 +15,37 @@
 @import "@ionic/vue/css/flex-utils.css";
 @import "@ionic/vue/css/display.css";
 
-.toast-info .toast-container {
-  border-color: #0a9dc7;
-  background-color: #11c1f3;
-  color: #fff;
+/* ion-toast renders in shadow DOM; style it through its CSS variables */
+.toast-info {
+  --background: #11c1f3;
+  --border-color: #0a9dc7;
+  --border-style: solid;
+  --border-width: 1px;
+  --color: #fff;
 }
 
-.toast-warn .toast-container {
-  border-color: #e6b500;
-  background-color: #ffc900;
-  color: #fff;
+.toast-warn {
+  --background: #ffc900;
+  --border-color: #e6b500;
+  --border-style: solid;
+  --border-width: 1px;
+  --color: #fff;
 }
 
-.toast-error .toast-container {
-  border-color: #e42112;
-  background-color: #ef473a;
-  color: #fff;
+.toast-error {
+  --background: #ef473a;
+  --border-color: #e42112;
+  --border-style: solid;
+  --border-width: 1px;
+  --color: #fff;
 }
 
-.toast-debug .toast-container {
-  border-color: #111;
-  background-color: #444444;
-  color: #fff;
+.toast-debug {
+  --background: #444444;
+  --border-color: #111;
+  --border-style: solid;
+  --border-width: 1px;
+  --color: #fff;
 }
 
 .info-modal .alert-message {

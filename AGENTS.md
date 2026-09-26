@@ -27,7 +27,7 @@ src/
   layout/      # Shared layout components
   store/       # Pinia stores (barrel export via index.ts)
   i18n/        # Translations (en, ro)
-  theme/       # Global styles (plain CSS)
+  theme.css    # Global styles
 ```
 
 Each feature folder contains `components/` and `pages/`.
@@ -96,8 +96,9 @@ Each feature folder contains `components/` and `pages/`.
 
 ### Styling
 
-- Plain CSS (no Sass). Avoid CSS nesting; keep selectors flat
-- Global styles in `src/theme/global.css`
+- Plain CSS (no Sass). Avoid CSS nesting (iOS 16.0-16.4, still supported by Ionic 9, lacks it); keep selectors flat
+- Global styles in `src/theme.css` (Ionic CSS imports + overrides)
+- Shadow-DOM Ionic components (e.g. `ion-toast`) ignore global selectors for their internals: style them via their CSS variables (`--background`, ...) or `::part()`. Scoped ones (e.g. `ion-alert`) accept plain selectors
 - Component-scoped styles preferred
 - Use Ionic CSS utilities when possible (e.g., `ion-padding`, `ion-padding-start`)
 
@@ -119,6 +120,7 @@ Each feature folder contains `components/` and `pages/`.
 - Uses `@ionic/pwa-elements` for web-based modals/toasts
 - Global `window.chrome.cast` declarations for Chromecast sender API
 - TypeScript 7 (no JS compiler API) is type-checked with `vue-tsgo`. Don't add `vue-tsc`, or any tool needing the TS 6 API (e.g. typescript-eslint), without a `@typescript/typescript6` alias
+- `vite.config.ts` marks `@ionic/core/components` side-effect free (`build.rolldownOptions.treeshake.moduleSideEffects`). Without it, Ionic 9's `exports` map hides the nested `sideEffects: false` and every Ionic component gets bundled (~1.1 MB instead of ~0.8 MB)
 - There is no test runner; the unused Vitest/jsdom setup was removed. `bun test` is the lightest option if tests are added
 - `vite.config.ts` reads `.cert/key.pem` and `.cert/cert.pem` if they exist and otherwise falls back to HTTP. HMR is hard-wired to `wss://vite.local.dev:3000`
 - The README says the app ID is in `src/providers/chromecast.ts`. That path is stale: the ID is `APPLICATION_ID` in `src/store/crome-cast.store.ts`

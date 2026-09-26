@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import './theme/global.css'
+import './theme.css'
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 import { createPinia } from 'pinia'

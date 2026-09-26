@@ -54,6 +54,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  build: {
+    // single vendor chunk loaded from the device in the native app; ~0.8 MB is expected
+    chunkSizeWarningLimit: 900,
+    rolldownOptions: {
+      // Ionic 9 added an `exports` map to @ionic/core, so rolldown no longer picks up the
+      // `sideEffects: false` in @ionic/core/components/package.json and bundles every component
+      treeshake: { moduleSideEffects: id => !/[\\/]@ionic[\\/]core[\\/]components[\\/]/.test(id) }
+    }
+  },
   server: {
     host: true,
     port: 3000,
