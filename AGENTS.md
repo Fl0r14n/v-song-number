@@ -8,9 +8,6 @@ bun run dev              # Start dev server (https://vite.local.dev:3000)
 bun run build            # Type check + production build
 bun run build-only       # Production build without type checking
 bun run type-check       # Type check with vue-tsgo (TypeScript 7)
-bun run test:unit        # Run all vitest tests
-bun run test:unit -t "test name"  # Run a single test by name
-bun run test:unit src/path/to/file.test.ts  # Run tests in a specific file
 bun run lint             # Biome lint
 bun run format           # Biome format (write)
 bun run check            # Biome lint + format + organize imports (write)
@@ -30,7 +27,7 @@ src/
   layout/      # Shared layout components
   store/       # Pinia stores (barrel export via index.ts)
   i18n/        # Translations (en, ro)
-  theme/       # Global styles (SCSS)
+  theme/       # Global styles (plain CSS)
 ```
 
 Each feature folder contains `components/` and `pages/`.
@@ -99,8 +96,8 @@ Each feature folder contains `components/` and `pages/`.
 
 ### Styling
 
-- SCSS for styles
-- Global styles in `src/theme/global.scss`
+- Plain CSS (no Sass). Avoid CSS nesting; keep selectors flat
+- Global styles in `src/theme/global.css`
 - Component-scoped styles preferred
 - Use Ionic CSS utilities when possible (e.g., `ion-padding`, `ion-padding-start`)
 
@@ -122,10 +119,10 @@ Each feature folder contains `components/` and `pages/`.
 - Uses `@ionic/pwa-elements` for web-based modals/toasts
 - Global `window.chrome.cast` declarations for Chromecast sender API
 - TypeScript 7 (no JS compiler API) is type-checked with `vue-tsgo`. Don't add `vue-tsc`, or any tool needing the TS 6 API (e.g. typescript-eslint), without a `@typescript/typescript6` alias
-- There are no unit tests yet. Vitest is configured with jsdom (`vitest.config.ts` merges `vite.config.ts`), but the repo has no `*.test.ts` or `*.spec.ts` files
+- There is no test runner; the unused Vitest/jsdom setup was removed. `bun test` is the lightest option if tests are added
 - `vite.config.ts` reads `.cert/key.pem` and `.cert/cert.pem` if they exist and otherwise falls back to HTTP. HMR is hard-wired to `wss://vite.local.dev:3000`
 - The README says the app ID is in `src/providers/chromecast.ts`. That path is stale: the ID is `APPLICATION_ID` in `src/store/crome-cast.store.ts`
-- Native builds: `bun run sync`, then `npx ionic cap open android` (or `ios`). Android version is set in `android/app/build.gradle`; regenerate icons/splash with `bun run assets`
+- Native builds: `bun run sync`, then `bunx cap open android` (or `ios`). Android version is set in `android/app/build.gradle`; regenerate icons/splash with `bun run assets`
 
 ## Architecture
 

@@ -5,36 +5,36 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 ### Build
 
 - Install dependencies
-  `npm i`
+  `bun i`
 - Build app
-  `npx ionic build`
+  `bun run build`
 
 ### Run
 
 - Optional generate [certs](.cert/README.md) for https for local dev
 
 - Run app in browser
-  `npm run dev`
+  `bun run dev`
 
 ### Electron
 
 - Add deployment platform
-  `npx ionic cap add @capacitor-community/electron`
-- Copy build files to platform
-  `npx ionic cap copy`
+  `bunx cap add @capacitor-community/electron`
+- Build and copy files to platform
+  `bun run build-only && bunx cap copy`
 - Open project for electron
-  `npx ionic cap open @capacitor-community/electron`
+  `bunx cap open @capacitor-community/electron`
 
 ### Android
 
 - Add deployment platform
-  `npx ionic cap add android`
-- Copy build files to platform
-  `npx ionic cap copy`
+  `bunx cap add android`
+- Build and copy files to platform
+  `bun run build-only && bunx cap copy`
 - Generate assets (icon and splash)
-  `npx @capacitor/assets generate`
-- Shortcut
-  `npx ionic cap sync`
+  `bun run assets`
+- Shortcut (build + sync)
+  `bun run sync`
 
 - (Optional) Add permissions to `AndroidManifest.xml`
 
@@ -47,20 +47,20 @@ SongNumber is a small mobile app that will allow user to set a song number from 
 ### IOS
 
 - Add deployment platform
-  `npx ionic cap add ios`
-- Copy build files to platform
-  `npx ionic cap copy`
+  `bunx cap add ios`
+- Build and copy files to platform
+  `bun run build-only && bunx cap copy`
 - Generate assets (icon and splash)
-  `npx @capacitor/assets generate`
+  `bun run assets`
 
 ### Deploy
 
 - Open platform ide for native build. You might need to change path in `capacitor.config.ts`
-  `npx ionic cap open android`
+  `bunx cap open android`
   optional with intellij
-  `CAPACITOR_ANDROID_STUDIO_PATH=/usr/bin/intellij-idea-ultimate-edition npx ionic cap open android`
+  `CAPACITOR_ANDROID_STUDIO_PATH=/usr/bin/intellij-idea-ultimate-edition bunx cap open android`
 - For iOS open xcode
-  `npx ionic cap open ios`
+  `bunx cap open ios`
 
 #### Android
 
@@ -73,7 +73,7 @@ SongNumber is a small mobile app that will allow user to set a song number from 
   development: https://developers.google.com/cast/docs/developers#Get_started
 - Register an application on the Developers Console (http://cast.google.com/publish). Select the Custom Receiver option
   and specify the URL to where you are hosting the receiver index.html file
-- Insert your App ID in the src/providers/chromecast.ts file
+- Insert your App ID in the `APPLICATION_ID` in `src/store/crome-cast.store.ts`
 - Copy index.html from receiver to your own server
 
 ### License

@@ -54,11 +54,9 @@
   const { cast, readPresented, presentInfo } = songNumberStore
   const { info, castButton, presentedButton, presentButton } = storeToRefs(songNumberStore)
 </script>
-<style lang="scss">
-  ion-header {
-    ion-fab-button {
-      margin-right: 8px;
-      padding: 2px;
-    }
+<style>
+  ion-header ion-fab-button {
+    margin-right: 8px;
+    padding: 2px;
   }
 </style>

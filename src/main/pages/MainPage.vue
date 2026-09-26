@@ -129,11 +129,9 @@
     }
   })
 </script>
-<style lang="scss">
-  ion-header {
-    ion-fab-button {
-      margin-right: 8px;
-      padding: 2px;
-    }
+<style>
+  ion-header ion-fab-button {
+    margin-right: 8px;
+    padding: 2px;
   }
 </style>

@@ -18,18 +18,16 @@
     "ionic framework"
   ],
   "scripts": {
-    "ionic": "ionic",
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vue-tsgo --build && vite build",
     "build-only": "vite build",
     "type-check": "vue-tsgo --build",
-    "test:unit": "vitest",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
-    "assets": "npx @capacitor/assets generate",
-    "android": "npx ionic cap add android",
-    "sync": "npx ionic cap sync"
+    "assets": "capacitor-assets generate",
+    "android": "cap add android",
+    "sync": "vite build && cap sync"
   },
   "dependencies": {
     "@capacitor/android": "8.5.2",
@@ -55,21 +53,13 @@
     "@biomejs/biome": "^2.5.14",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.5.2",
-    "@ionic/cli": "^7.2.1",
     "@tsconfig/node24": "^24.0.5",
-    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.3",
     "@vitejs/plugin-vue": "^6.0.9",
-    "@vue/test-utils": "^2.5.1",
     "@vue/tsconfig": "^0.9.1",
     "cordova-chromecast": "git+https://github.com/funxtionatics/cordova-plugin-chromecast.git",
-    "globals": "^17.12.0",
-    "jsdom": "^30.1.1",
-    "npm-run-all2": "^9.0.3",
-    "sass-embedded": "^1.105.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.1",
-    "vitest": "^5.0.2",
     "vue-tsgo": "^0.3.0"
   }
 }
