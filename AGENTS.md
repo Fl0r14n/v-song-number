@@ -6,7 +6,7 @@
 npm run dev              # Start dev server (https://vite.local.dev:3000)
 npm run build            # Type check + production build
 npm run build-only       # Production build without type checking
-npm run type-check       # Run vue-tsc type checking
+npm run type-check       # Type check with vue-tsgo (TypeScript 7)
 npm run test:unit        # Run all vitest tests
 npm run test:unit -- -t "test name"  # Run a single test by name
 npm run test:unit -- src/path/to/file.test.ts  # Run tests in a specific file
@@ -113,7 +113,23 @@ Each feature folder contains `components/` and `pages/`.
 - HTTPS required for local dev (certs in `.cert/`)
 - Chromecast integration via custom `cordova-chromecast` package
 - Chromecast app ID: `20CAA3A2`, namespace: `urn:x-cast:ro.biserica2.cast.songnumber`
-- PWA enabled with auto-update registration via `vite-plugin-pwa`
+- PWA is currently **disabled**: `VitePWA` is commented out in `vite.config.ts` until the library updates
 - Target platforms: Android, iOS, Web
 - Uses `@ionic/pwa-elements` for web-based modals/toasts
 - Global `window.chrome.cast` declarations for Chromecast sender API
+- TypeScript runs side by side: `typescript` is aliased to `@typescript/typescript6` (typescript-eslint needs the TS 6 API), and `typescript7` is TS 7, used by `vue-tsgo --tsdk typescript7` for type checking. Don't reinstall plain `typescript@7` or `vue-tsc`; both break on TS 7
+- There are no unit tests yet. Vitest is configured with jsdom (`vitest.config.ts` merges `vite.config.ts`), but the repo has no `*.test.ts` or `*.spec.ts` files
+- `vite.config.ts` reads `.cert/key.pem` and `.cert/cert.pem` if they exist and otherwise falls back to HTTP. HMR is hard-wired to `wss://vite.local.dev:3000`
+- The README says the app ID is in `src/providers/chromecast.ts`. That path is stale: the ID is `APPLICATION_ID` in `src/store/crome-cast.store.ts`
+- Native builds: `npm run sync`, then `npx ionic cap open android` (or `ios`). Android version is set in `android/app/build.gradle`; regenerate icons/splash with `npm run assets`
+
+## Architecture
+
+- **Bootstrapping** — `src/main.ts` defines the router, i18n and Pinia inline (there is no `router/` folder). Every page is a child of `LayoutPage.vue`; unknown paths redirect to `/main`.
+- **Stores import each other through the `@/store` barrel.** `src/store/index.ts` re-exports in a deliberate order (models → ref → script → logger → camera → song-books → song-number → chromecast → form). Adding a store means adding it there, and keeping in mind that barrel order matters for circular imports.
+- **Persistence** — `storageRef(key, initial, map?)` in `src/store/ref.ts` is a `ref` backed by Capacitor Preferences (JSON-serialized). It starts at `initial`, loads asynchronously, and only begins writing back (deep watch) _after_ the first load. Code that reads a `storageRef` right at startup may see the initial value. Storage keys are `STORAGE_ID_*` constants prefixed `song-number-settings-`.
+- **Chromecast flow** — `crome-cast.store.ts` (the filename really is misspelled) loads the Google Cast sender script, initializes it on `__onGCastApiAvailable` (web) or `deviceready` (native via `cordova-chromecast`), and exposes `state` / `open` / `close` / `send` / `message`. `ChromeCastState` values are bit flags (`DISABLED=0, INITIALIZED=1, AVAILABLE=3, CONNECTED=7`), so check them with bitmasks the way `song-number.store.ts` does. `song-number.store.ts` sits on top of it: it owns the digits, book, notes and info, and sends messages whose `type` comes from its `MessageType` enum (`READ=0, SONG=1, INFO=2, CLEAR=3`).
+- **Receiver** — `receiver/index.html` is the standalone Cast receiver page, hosted separately and registered under the app ID. It switches on the same numeric `type` values, so changing the message protocol means editing `MessageType` in `song-number.store.ts` **and** the receiver together.
+- **Song book catalog** — `song-books.store.ts` fetches remote JSON from a user-configurable endpoint. It defaults to `VITE_DOWNLOADS` in `.env`, which points at this repo's `downloads/` folder on GitHub raw. The layout is `languages.json` → `index/<lang>/collections.json` → the collection files listed in `paths`. `downloads/` is data served from `master`, not app code. The default cover comes from `public/json/cover.json`.
+- **Forms** — `src/store/form.ts` provides `useForm` plus validation rules (`requiredRule`, `minLengthRule`), which toggle Ionic's `ion-valid`, `ion-invalid` and `ion-touched` classes.
+- **Logging** — `useLoggerStore` shows toasts instead of writing to the console. `info` always shows; `warn`, `error` and `debug` only show at or above the persisted log level.
