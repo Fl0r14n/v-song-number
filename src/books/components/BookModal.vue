@@ -120,7 +120,7 @@
   onMounted(async () => {
     if (!form.value.thumb) {
       const cover = await defaultCover()
-      form.value.thumb = cover.thumb
+      form.value.thumb = cover?.thumb
     }
     await askPermission()
   })

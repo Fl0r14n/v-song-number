@@ -42,7 +42,6 @@
     "@ionic/pwa-elements": "^3.4.0",
     "@ionic/vue": "^9.0.5",
     "@ionic/vue-router": "^9.0.5",
-    "axios": "^1.20.0",
     "ionicons": "^8.1.0",
     "pinia": "^4.0.3",
     "vue": "^3.5.43",
@@ -52,7 +51,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
     "@capacitor/cli": "^8.5.2",
-    "@tsconfig/node24": "^24.0.5",
     "@types/node": "^26.6.3",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vue/tsconfig": "^0.9.1",
